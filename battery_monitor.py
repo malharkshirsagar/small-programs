@@ -1,25 +1,8 @@
-"""
-=============================================================
- battery_monitor.py  –  Windows Laptop Battery Monitor v1
- Author : (your name)
- Purpose: Alert user when battery is too low (<= 20%)
-          or fully charged / overcharging (>= 80%)
-=============================================================
 
-HOW IT WORKS (plain English)
-──────────────────────────────
-1. Every 60 seconds the script reads the battery level with psutil.
-2. If the level crosses a threshold (20% or 80%) AND we haven't
-   already alerted for that threshold, a Windows toast notification
-   pops up and the "alerted" flag is set to True.
-3. When the battery moves away from the threshold zone the flag
-   resets, so the next crossing will alert again.
-4. The script runs forever until you close the terminal (Ctrl+C).
-"""
 
 # ── stdlib / third-party imports ────────────────────────────
-import time          # for time.sleep() – keeps CPU usage low
-import sys           # for sys.exit() – clean exit on error
+import time         
+import sys           
 
 try:
     import psutil    # reads hardware data (battery, CPU, RAM …) ...I
@@ -29,7 +12,7 @@ except ImportError:
     sys.exit(1)
 
 try:
-    from plyer import notification   # cross-platform toast notifications
+    from plyer import notification  
 except ImportError:
     print("[ERROR] plyer is not installed.")
     print("        Run:  pip install plyer")
@@ -44,14 +27,7 @@ CHECK_INTERVAL = 60   # (seconds) how often to poll the battery
 
 # ── helper: send a Windows toast notification ────────────────
 def send_notification(title: str, message: str) -> None:
-    """
-    Displays a Windows desktop toast notification.
 
-    Parameters
-    ----------
-    title   : bold heading shown in the notification
-    message : body text of the notification
-    """
     try:
         notification.notify(
             title=title,
